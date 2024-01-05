@@ -60,7 +60,7 @@ const todoSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchTasks.fulfilled, (state, action: PayloadAction<FetchTasksResponse>) => {
-                state.list = action.payload.tasks;
+                state.list = action.payload;
             });
     }
 });
