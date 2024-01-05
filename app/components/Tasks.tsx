@@ -1,27 +1,35 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../lib/store';
 import { useAppDispatch } from '../../lib/hooks';
-import { addTodo, toggleTodo, removeTodo, fetchTasks } from '../../lib/features/task/taskSlice';
+import { TTask, fetchTasks } from '../../lib/features/task/taskSlice';
+import Task from './Task';
 
 const Tasks: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const todos = useSelector((state: RootState) => state.tasks.list);
+    const dispatch = useAppDispatch();
+    const todos = useSelector((state: RootState) => state.tasks.list);
 
-  useEffect(() => {
-    dispatch(fetchTasks());
-  }, [])
+    useEffect(() => {
+        const fetchData = async () => {
+            await dispatch(fetchTasks());
+        };
 
-  console.log('todos ', todos)
+        fetchData();
+    }, [dispatch]);
 
-//   dispatch(toggleTodo(123)); 
-//   dispatch(removeTodo(456));
+    if (!todos) {
+        return <div>No Tasks Here</div>;
+    }
 
-  return (
-    <div>Hello</div>
-  );
+    return (
+        <div style={{ height: '600px', overflowY: 'scroll' }}>
+            {todos.map((task: TTask) => (
+                <Task key={task.id} task={task} />
+            ))}
+        </div>
+    );
 };
 
 export default Tasks;
