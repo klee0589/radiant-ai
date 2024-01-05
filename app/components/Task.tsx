@@ -8,7 +8,7 @@ const Task = ({ task }: { task: TTask }) => {
     const { id, favorite, title } = task;
     const [newTitle, setNewTitle] = useState<string>(title);
 
-    const clickHandler = ({ type, title }: { type: string, title?: string }) => {
+    const clickHandler = ({ type }: { type: string }) => {
 
         if (type === 'delete') {
             dispatch(removeTask(id));
@@ -32,7 +32,7 @@ const Task = ({ task }: { task: TTask }) => {
                 onChange={(e) => setNewTitle(e.target.value)}
                 placeholder={task.title}
             />
-            <button onClick={() => clickHandler({ type: 'update', title: newTitle })}>
+            <button onClick={() => clickHandler({ type: 'update' })}>
                 Update
             </button></div>
         <div><button onClick={() => clickHandler({ type: 'delete' })}>Delete</button></div>
